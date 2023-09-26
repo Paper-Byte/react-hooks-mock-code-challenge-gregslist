@@ -5,7 +5,6 @@ import ListingsContainer from './ListingsContainer';
 function App() {
   const [allListings, setAllListings] = useState([]);
   const [searchText, setSearchText] = useState('');
-  const [isSearched, setIsSearched] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,18 +20,14 @@ function App() {
   }, []);
 
   const itemsToDisplay = allListings.filter((listing) =>
-    isSearched ? listing.description.includes(searchText) : listing
+    searchText !== ''
+      ? listing.description.includes(searchText)
+      : listing
   );
-
-  console.log(itemsToDisplay);
 
   return (
     <div className="app">
-      <Header
-        searchText={searchText}
-        setSearchText={setSearchText}
-        setIsSearched={setIsSearched}
-      />
+      <Header setSearchText={setSearchText} />
       <ListingsContainer
         setAllListings={setAllListings}
         itemsToDisplay={itemsToDisplay}
